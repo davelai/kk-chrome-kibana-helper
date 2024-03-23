@@ -5,5 +5,4 @@ node_modules
 /dist/images
 /dist/js
 /dist/background.js
-package-lock.json
 .vscode

@@ -9,3 +9,4 @@ const app = new Vue({
     el: '#app',
     render: createElement => createElement(Options)
 });
+
