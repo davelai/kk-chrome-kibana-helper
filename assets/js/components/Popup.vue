@@ -122,6 +122,8 @@ export default {
       return filters;
     },
     buildFilter(key, value) {
+      value = "'" + value.trim() + "'";
+
       return '('+ "'" + '$state' + "'" + ':(store:appState),meta:(alias:!n,disabled:!f,key:' +
           key +
           ',negate:!f,params:(query:' +
