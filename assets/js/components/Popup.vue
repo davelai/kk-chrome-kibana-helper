@@ -1,6 +1,16 @@
 <template>
   <div>
     <el-form v-model="form">
+      <el-form-item label="env" required>
+        <el-select v-model="form.env" filterable allow-create>
+          <el-option
+              v-for="env in envs"
+              :key="env"
+              :label="env"
+              :value="env">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="log_label: RESPONSE">
         <el-switch v-model="form.ifLogLabelResponse"></el-switch>
       </el-form-item>
@@ -51,7 +61,9 @@ export default {
         b2bServiceName: '---',
         b2bServiceOrderMid: '',
         searchDate: '1day',
+        env: 'sit',
       },
+      envs: ['sit', 'stage', 'production'],
       services: ['---', 'ACG', 'AEL', 'AX', 'Airalo', 'B2BProduct', 'B2bOrder', 'B2rMedia', 'B2rMultiLang', 'B2rPackage', 'B2rProduct', 'BMGBooking', 'BMGData', 'BMGProductOption', 'BMGProduct', 'BMGProductService_old.php', 'BMG', 'Bcifop', 'BookingRule', 'Broadway', 'CKS', 'CalendarRule', 'Chimelong', 'CityTour', 'Coreworks', 'Ctrip', 'CustomLinc', 'DJB', 'E7Life', 'ERL', 'Edenred', 'Enjoyaus', 'Everland', 'ExcitingPenghu', 'ExperienceOz', 'Ezo', 'Fake', 'FargloryOceanPark', 'Fontrip', 'FunNow', 'GalaxyConnect', 'GlobalTix', 'GoodFellows', 'HIS', 'HKDL', 'HKOP', 'HKOPv2', 'HS', 'HanaTour', 'ITC', 'IVenture', 'Ibis', 'Ingresso', 'Inventory', 'JPH', 'JPHv2', 'JRKyushu', 'JejuMobile', 'JejuShinhwaWorld', 'K11', 'KKApi', 'LPG', 'LSCompany', 'Lihpao', 'Linktivity', 'LongHung', 'M12', 'MacauTower', 'MelcoCrown', 'Mohist', 'NP360', 'Nanta', 'Nextstory', 'Ocard', 'PeakTramways', 'Phantom', 'Playstory', 'PlusN', 'Prepia', 'REZIO', 'RWC', 'RWS', 'RailEurope', 'RedTable', 'Redeam', 'SANPU', 'SET', 'SHDL', 'SeoulPass', 'SeoulPassV2', 'SiteMinderFake', 'SiteMinder', 'SkiData', 'Skyroam', 'SmartInfini', 'Smartix', 'StarYouBon', 'SunWorld', 'Sunacctg', 'Systex', 'TFC', 'THSROTS', 'THSROTSv2', 'THSRTW', 'Tablenjoy', 'ThreeTGD', 'TicketGo', 'Ticketsuda', 'TourBMS', 'TourCMS', 'TripStore', 'Tripcarte', 'TsimTech', 'TurboJET', 'TwelveCM', 'USIMSA', 'UniveralStudio', 'VPass', 'Varitrip', 'Ventrata', 'VinWonder', 'Vocom', 'WBF', 'WeekN', 'Windbreak', 'Xpark', 'Xplori', 'Yanolja'],
       currentTab: null,
     }
@@ -87,8 +99,18 @@ export default {
     },
     search() {
       console.log(this.form);
+      let domain = 'kibana.sit.kkday.com';
+      switch (this.form.env) {
+        case 'stage':
+          domain = 'kibana.stage.kkday.com';
+          break;
+        case 'production':
+          domain = 'kibana.kkday.com';
+          break;
+      }
+
       let targetUrl = this.buildSearchUrl(
-          new URL(this.currentTab.url).hostname,
+          domain,
           this.buildFormFilters(),
           this.buildDateQuery()
       );

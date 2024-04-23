@@ -4,5 +4,6 @@
     "/dist/js/options.js": "/dist/js/options.js",
     "/dist/css/options.css": "/dist/css/options.css",
     "/dist/css/popup.css": "/dist/css/popup.css",
+    "/dist/images/.DS_Store": "/dist/images/.DS_Store",
     "/dist/images/extension-icon.png": "/dist/images/extension-icon.png"
 }
